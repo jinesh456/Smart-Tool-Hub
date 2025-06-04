@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌍 Smart Digital Tools Hub | All-in-One Online Utilities</title>
+  <style>
+    :root {
+      --primary-color: #4f46e5;
+      --secondary-color: #06b6d4;
+      --bg-light: #f9fafb;
+      --text-dark: #1f2937;
+      --card-bg: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: var(--bg-light);
+      color: var(--text-dark);
+    }
+    header, footer {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      background: #1e293b;
+    }
+    nav a {
+      padding: 15px 25px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      background: #334155;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+    .tool {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tool:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    .tool h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    textarea, input, button, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    button {
+      background: var(--primary-color);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background: var(--secondary-color);
+    }
+    iframe {
+      width: 100%;
+      height: 320px;
+      border: none;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+    #downloadLink {
+      display: inline-block;
+      margin-top: 10px;
+      background: #10b981;
+      padding: 10px;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌍 Smart Digital Tools Hub</h1>
+    <p>All-in-One Professional Utilities for Daily Use</p>
+  </header>
+  <nav>
+    <a href="#">🏠 Home</a>
+    <a href="#">📂 Tools</a>
+    <a href="#">📞 Contact</a>
+    <a href="#">💼 Work With Us</a>
+  </nav>
+  <main class="tools-grid">
+    <div class="tool">
+      <h3>🔳 QR Code Generator</h3>
+      <input type="text" id="qrInput" placeholder="Enter URL or Text">
+      <button onclick="generateQR()">Generate QR</button>
+      <div id="qrResult" style="margin-top: 15px;"></div>
+    </div><div class="tool">
+  <h3>🔊 Text to Speech</h3>
+  <textarea id="ttsText" rows="4" placeholder="Enter text to speak..."></textarea>
+  <button onclick="speakText()">Speak</button>
+</div>
+
+<div class="tool">
+  <h3>🖼️ Image Compressor</h3>
+  <input type="file" id="imageInput" accept="image/*">
+  <button onclick="compressImage()">Compress Image</button>
+  <canvas id="canvas" style="display:none;"></canvas>
+  <a id="downloadLink" download="compressed.jpg">Download Compressed Image</a>
+</div>
+
+<div class="tool">
+  <h3>🌐 Public IP Address</h3>
+  <button onclick="getIP()">Get My IP</button>
+  <p id="ipDisplay"></p>
+</div>
+
+<div class="tool">
+  <h3>📄 PDF Tools (by iLovePDF)</h3>
+  <iframe src="https://www.ilovepdf.com" title="iLovePDF Tools"></iframe>
+</div>
+
+<div class="tool">
+  <h3>📺 YouTube Thumbnail Downloader</h3>
+  <input type="text" id="ytURL" placeholder="Enter YouTube Video URL">
+  <button onclick="getYTThumbnail()">Get Thumbnail</button>
+  <div id="ytThumbResult"></div>
+</div>
+
+<div class="tool">
+  <h3>🌡️ Temperature Converter</h3>
+  <input type="number" id="celsius" placeholder="Enter Celsius">
+  <button onclick="convertToFar()">Convert to Fahrenheit</button>
+  <p id="tempResult"></p>
+</div>
+
+<div class="tool">
+  <h3>🎨 Random Color Generator</h3>
+  <button onclick="generateColor()">Generate Color</button>
+  <div id="colorBox" style="height: 50px; margin-top: 10px;"></div>
+</div>
+
+<div class="tool">
+  <h3>📆 Age Calculator</h3>
+  <input type="date" id="birthdate">
+  <button onclick="calculateAge()">Calculate Age</button>
+  <p id="ageResult"></p>
+</div>
+
+  </main>
+  <footer>
+    <p>© 2025 Smart Tools Hub | Designed by Jinesh Prajapati | All rights reserved</p>
+  </footer>  <script>
+    function generateQR() {
+      const text = document.getElementById("qrInput").value;
+      const qrResult = document.getElementById("qrResult");
+      if (text.trim() === '') {
+        qrResult.innerHTML = "<p>Please enter valid text or URL</p>";
+        return;
+      }
+      qrResult.innerHTML = `<img src='https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(text)}' alt='QR Code'>`;
+    }
+
+    function speakText() {
+      const text = document.getElementById("ttsText").value;
+      if (!text) return alert("Please enter some text");
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    }
+
+    function compressImage() {
+      const input = document.getElementById("imageInput");
+      const canvas = document.getElementById("canvas");
+      const link = document.getElementById("downloadLink");
+      const file = input.files[0];
+      if (!file) return alert("Select an image file");
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = new Image();
+        img.onload = function () {
+          const ctx = canvas.getContext("2d");
+          canvas.width = img.width / 2;
+          canvas.height = img.height / 2;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(function(blob) {
+            link.href = URL.createObjectURL(blob);
+            link.style.display = "inline-block";
+          }, 'image/jpeg', 0.6);
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function getIP() {
+      fetch("https://api.ipify.org?format=json")
+        .then(res => res.json())
+        .then(data => document.getElementById("ipDisplay").textContent = `Your IP: ${data.ip}`)
+        .catch(() => document.getElementById("ipDisplay").textContent = "Unable to retrieve IP");
+    }
+
+    function getYTThumbnail() {
+      const url = document.getElementById("ytURL").value;
+      const videoID = url.split("v=")[1]?.split("&")[0];
+      const container = document.getElementById("ytThumbResult");
+      if (!videoID) return container.innerHTML = "<p>Invalid YouTube URL.</p>";
+      const imgURL = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
+      container.innerHTML = `<img src="${imgURL}" alt="Thumbnail" style="max-width:100%;margin-top:10px;border-radius:12px;">`;
+    }
+
+    function convertToFar() {
+      const celsius = parseFloat(document.getElementById("celsius").value);
+      if (isNaN(celsius)) return alert("Enter a valid number");
+      const fahrenheit = (celsius * 9 / 5) + 32;
+      document.getElementById("tempResult").textContent = `${celsius}°C = ${fahrenheit.toFixed(2)}°F`;
+    }
+
+    function generateColor() {
+      const color = '#' + Math.floor(Math.random()*16777215).toString(16);
+      const box = document.getElementById("colorBox");
+      box.style.background = color;
+      box.innerHTML = `<p style='text-align:center;padding-top:10px;'>${color}</p>`;
+    }
+
+    function calculateAge() {
+      const birthdate = new Date(document.getElementById("birthdate").value);
+      if (isNaN(birthdate)) return alert("Select your birthdate");
+      const today = new Date();
+      let age = today.getFullYear() - birthdate.getFullYear();
+      const m = today.getMonth() - birthdate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthdate.getDate())) age--;
+      document.getElementById("ageResult").textContent = `You are ${age} years old.`;
+    }
+  </script></body>
+</html>
+
